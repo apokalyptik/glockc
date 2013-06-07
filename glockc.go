@@ -1,11 +1,11 @@
 package glockc
 
-import(
-	"net"
-	"fmt"
+import (
 	"bufio"
-	"strings"
+	"fmt"
+	"net"
 	"strconv"
+	"strings"
 )
 
 type Client struct {
@@ -22,10 +22,10 @@ func (self *Client) command(command ...string) (int, error) {
 	sendCommand := ""
 	l := len(command)
 	for i, s := range command {
-		if ( i + 1 ) == l {
-			sendCommand = fmt.Sprintf( "%s %s\n", sendCommand, strings.TrimSpace(s) )
+		if (i + 1) == l {
+			sendCommand = fmt.Sprintf("%s %s\n", sendCommand, strings.TrimSpace(s))
 		} else {
-			sendCommand = fmt.Sprintf( "%s %s ", sendCommand,strings.TrimSpace(s) )
+			sendCommand = fmt.Sprintf("%s %s ", sendCommand, strings.TrimSpace(s))
 		}
 	}
 	fmt.Fprintf(self.conn, sendCommand)
@@ -40,30 +40,30 @@ func (self *Client) command(command ...string) (int, error) {
 
 func (self *Client) Get(lock string, shared bool) (int, error) {
 	if shared {
-		return self.command( "sg", lock )
+		return self.command("sg", lock)
 	} else {
-		return self.command( "g", lock )
+		return self.command("g", lock)
 	}
 }
 
 func (self *Client) Release(lock string, shared bool) (int, error) {
 	if shared {
-		return self.command( "sr", lock )
+		return self.command("sr", lock)
 	} else {
-		return self.command( "r", lock )
+		return self.command("r", lock)
 	}
 }
 
 func (self *Client) Inspect(lock string, shared bool) (int, error) {
 	if shared {
-		return self.command( "si", lock )
+		return self.command("si", lock)
 	} else {
-		return self.command( "i", lock )
+		return self.command("i", lock)
 	}
 }
 
 func (self *Client) Name(name string) (int, error) {
-	return self.command( "iam", name )
+	return self.command("iam", name)
 }
 
 func (self *Client) DebugLast() string {
@@ -74,6 +74,6 @@ func New(host string, port int) (Client, error) {
 	var err error
 	client := Client{}
 	client.initialize()
-	client.conn, err = net.Dial( "tcp", fmt.Sprintf( "%s:%d", host, port ) )
+	client.conn, err = net.Dial("tcp", fmt.Sprintf("%s:%d", host, port))
 	return client, err
 }
