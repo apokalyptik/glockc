@@ -1,6 +1,8 @@
 glockc
 ======
 
+A client for the glockd network locking server (http://code.svn.wordpress.org/glockd/)
+
 Installation
 ------------
 go get github.com/apokalyptik/glockc
@@ -37,3 +39,22 @@ func main() {
 	}
 }
 ```
+
+Package Docs
+------------
+
+type Client struct {
+	    // contains filtered or unexported fields
+}
+
+func New(host string, port int) (Client, error)
+
+func (self *Client) DebugLast() string
+
+func (self *Client) Get(lock string, shared bool) (int, error)
+
+func (self *Client) Inspect(lock string, shared bool) (int, error)
+
+func (self *Client) Name(name string) (int, error)
+
+func (self *Client) Release(lock string, shared bool) (int, error)
